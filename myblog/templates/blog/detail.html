@@ -1,0 +1,77 @@
+{% extends 'layout/base_template.html' %}
+{% load static %}
+
+{% block title %} Coba {% endblock title %}
+
+{% block content %}
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+    {% include 'layout/sidebar.html' %}
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+
+            {% include 'layout/topbar.html' %}
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+
+                <!-- Page Heading -->
+                <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                    <h1 class="h3 mb-0 text-gray-800">
+                        {% if user.is_authenticated %}
+                        Selamat datang di blog, {{user.username}}!
+                        {% else %}
+                        Halo!
+                        {% endif %}
+                    </h1>
+                </div>
+
+                <!-- Earnings (Monthly) Card Example -->
+                <div class="row">
+                    <div class="col-lg-12 d-flex">
+
+                        <!-- Basic Card Example -->
+
+                        <div class="card shadow mb-4 flex-fill">
+                            <div class="card-header py-3 text-center">
+                                <img class="mb-2 card-img-top img-thumbnail" src="{{blog_post.image.url}}" style="width: 150px;">
+                                <h6 class="m-0 font-weight-bold text-primary">{{blog_post.title}}</h6>
+                                <h6 class="mt-2 mb-0 text-xs text-info">{{blog_post.date_published}} | {{blog_post.author}}</h6>
+                            </div>
+                            <div class="card-body">
+                                {{blog_post.body}}
+                            </div>
+                            {% if blog_post.author == request.user %}
+                            <a href="{% url 'blog:edit' blog_post.slug %}" class="btn btn-outline-info">Edit post</a>
+                            {% endif %}
+                        </div>
+
+                    </div>
+                </div>
+                <!-- Earnings (Monthly) Card Example -->
+
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- End of Main Content -->
+
+        {% include 'layout/footer.html' %}
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+{% endblock content %}

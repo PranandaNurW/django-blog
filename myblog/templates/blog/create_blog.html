@@ -1,0 +1,109 @@
+{% extends 'layout/base_template.html' %}
+{% load static %}
+
+{% block title %} Coba create blog {% endblock title %}
+
+{% block content %}
+<div id="wrapper">
+
+    {% include 'layout/sidebar.html' %}
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+
+            {% include 'layout/topbar.html' %}
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+
+                <!-- Page Heading -->
+                <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                    <h1 class="h3 mb-0 text-gray-800">
+                        Create blog
+                    </h1>
+                </div>
+
+                <div class="card o-hidden border-0 shadow-lg">
+                    <div class="card-body p-0">
+                        <!-- Nested Row within Card Body -->
+                        <div class="row justify-content-center">
+                            <div class="col-lg">
+                                <div class="p-5">
+    
+                                    <!-- help text & error -->
+                                    {% for field in form %}
+                                    {% if field.help_text %}
+                                    <div class="alert alert-info alert-dismissible fade show text-s" role="alert">
+                                        {{field.help_text}}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    {% endif %}
+                                    {% for error in field.errors %}
+                                    <div class="alert alert-danger alert-dismissible fade show text-s" role="alert">
+                                        {{error}}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    {% endfor %}
+    
+                                    {% endfor %}
+                                    {% if form.non_field_errors %}
+                                    <div class="alert alert-danger alert-dismissible fade show text-s" role="alert">
+                                        {{form.non_field_errors}}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    {% endif %}
+                                    
+                                    {% if success_message %}
+                                    <div class="alert alert-success alert-dismissible fade show text-s" role="alert">
+                                        {{success_message}}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    {% endif %}
+                                    <!-- /help text & error -->
+                                    
+                                    <!-- forms -->
+                                    <form method="POST" action="" autocomplete="off" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        {% for field in form %}
+                                        <div class="form-group">
+                                            <input type="{{ field.field.widget.input_type }}" name="{{field.html_name}}" class="form-control form-control-user"
+                                                    id="{{ field.id_for_label }}" placeholder="{{field.label}}"
+                                                    {% if field.field.widget.input_type == 'file' %} accept="image/*" {% endif %} required>
+                                        </div>
+                                        
+                                        {% endfor %}
+                                        <button class="btn btn-primary btn-user" type="submit">Add Post</button>
+                                    </form>
+                                    <!-- forms -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- End of Main Content -->
+
+        {% include 'layout/footer.html' %}
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+{% endblock content %}
