@@ -9,6 +9,9 @@ python = "^3.9"
 Django = "^4.0.2"
 requests = "^2.27.1"
 Pillow = "^9.0.1"
+djangorestframework = "^3.13.1"
+Markdown = "^3.3.6"
+opencv-python = "^4.5.5"
 
 [tool.poetry.dev-dependencies]
 

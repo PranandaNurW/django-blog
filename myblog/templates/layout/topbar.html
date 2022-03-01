@@ -8,7 +8,7 @@
     </button>
 
     <!-- Topbar Search -->
-    <form method="GET" autocomplete="off" class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+    <form method="GET" onsubmit="return executeQuery();" autocomplete="off" class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
         <div class="input-group">
             <input type="text" name="q" id="id_q" class="form-control bg-light border-0 small" placeholder="Search for..."
                 aria-label="Search" aria-describedby="basic-addon2">
@@ -32,7 +32,7 @@
             <!-- Dropdown - Messages -->
             <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
                 aria-labelledby="searchDropdown">
-                <form method="GET" autocomplete="off" class="form-inline mr-auto w-100 navbar-search">
+                <form method="GET" onsubmit="return executeQuery();" autocomplete="off" class="form-inline mr-auto w-100 navbar-search">
                     <div class="input-group">
                         <input type="text" name="q" id="id_q" class="form-control bg-light border-0 small" placeholder="Search for..."
                             aria-label="Search" aria-describedby="basic-addon2">
@@ -77,4 +77,13 @@
 
 <script type="text/javascript">
     document.getElementById("id_q").value = "{{query}}"
+</script>
+<script>
+function executeQuery() {
+    var query = document.getElementById('id_q').value;
+    window.location.replace("http://127.0.0.1:8000/blog?q=" + query)
+    // "url?q=" + query;
+    return false
+}
+
 </script>

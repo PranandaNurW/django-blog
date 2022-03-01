@@ -16,7 +16,7 @@ from account.models import Account
 
 BLOG_POST_PER_PAGE = 4
 
-# Create your views here.
+# Create blog
 def create_blog_view(request):
     context = {}
 
@@ -37,6 +37,7 @@ def create_blog_view(request):
 
     return render(request, 'blog/create_blog.html', context)
 
+# Show blog details based on slug
 def detail_blog_view(request, slug):
     context = {}
 
@@ -45,6 +46,7 @@ def detail_blog_view(request, slug):
 
     return render(request, 'blog/detail.html', context)
 
+# Update blog
 def edit_blog_view(request, slug):
     context = {}
 
@@ -70,6 +72,7 @@ def edit_blog_view(request, slug):
     context['form'] = form
     return render(request, 'blog/edit_blog.html', context)
 
+# Get all blog, search result, and pagination
 def home_blog_view(request):
     context = {}
 
@@ -78,12 +81,11 @@ def home_blog_view(request):
         query = request.GET.get('q', '')
         context['query'] = str(query)
 
-    # blog_posts = BlogPost.objects.order_by('-date_published')
     blog_posts = sorted(search_blog_view(query), key=attrgetter('date_updated'), reverse=True)
 
     page = request.GET.get('page', 1)
     blog_posts_paginator = Paginator(blog_posts, BLOG_POST_PER_PAGE)
-
+    
     try:
         blog_posts = blog_posts_paginator.page(page)
     except PageNotAnInteger:
@@ -96,6 +98,7 @@ def home_blog_view(request):
 
     return render(request, 'blog/home_blog.html', context)
 
+# Blog query search
 def search_blog_view(query=None):
     queryset = []
     queries = query.split(" ") #halo dunia baru = [halo, dunia, baru]
@@ -110,15 +113,18 @@ def search_blog_view(query=None):
 
     return list(set(queryset))
 
-def index(request):
-    context = {}
-    try:
-        response = requests.get('http://127.0.0.1:7000/blogapi/').json()
-        context = {'response':response}
-    except ConnectionError as e:
-        print(e)
+# def index(request):
+#     context = {}
+#     try:
+#         response = requests.get('http://127.0.0.1:7000/blogapi/').json()
+#         context = {'response':response}
+#     except ConnectionError as e:
+#         print(e)
         
-    return render(request, 'blog/index.html', context)
+#     return render(request, 'blog/index.html', context)
+
+
+# Class based view
 
 # class IndexView(generic.ListView):
 #     template_name = 'blog/index.html'

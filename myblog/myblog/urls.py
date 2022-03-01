@@ -8,6 +8,10 @@ urlpatterns = [
     path('blog/', include('blog.urls')),
     path('account/', include('account.urls')),
     path('admin/', admin.site.urls),
+
+    #rest framework
+    path('api/blog/', include('blog.api.urls', 'blog_api')),
+    path('api/account/', include('account.api.urls', 'account_api')),
 ]
 
 if settings.DEBUG:
