@@ -1,3 +1,4 @@
+from urllib import response
 from rest_framework import serializers
 
 from blog.models import BlogPost
@@ -116,4 +117,4 @@ class BlogPostCreateSerializer(serializers.ModelSerializer):
 			blog_post.save() # save the object after object is valid
 			return blog_post
 		except KeyError:
-			raise serializers.ValidationError({"response": "You must have a title, some content, and an image."}) 
+			raise serializers.ValidationError({"response": "You must have a title, some content, and an image."})
